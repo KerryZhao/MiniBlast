@@ -1,6 +1,5 @@
 /**
  * dnaMonitor --- the monitor class that allows the threads to print in order
- * 
  * @author Kerry Zhao (kxz8411)
  * 
  */
@@ -26,8 +25,15 @@ public class dnaMonitor {
 		if (number == upTo) {
 			System.out.println(string);
 			upTo++;
+			notifyAll();
 			return -1;
 		} else {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return 0;
 		}
 	}
@@ -44,8 +50,15 @@ public class dnaMonitor {
 		if (number == upTo) {
 			System.out.print("");
 			upTo++;
+			notifyAll();
 			return -1;
 		} else {
+			try {
+				wait();
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 			return 0;
 		}
 	}

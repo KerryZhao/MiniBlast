@@ -36,7 +36,7 @@ public class MiniBlast {
 				br.close();
 				for (int i = 0; i < readIn.size(); i++) {
 					dnaRunnable runny = new dnaRunnable(args[1], readIn.get(i),
-							i + 1, monitor);
+							i + 1, monitor, args[1].length());
 					runnableList.add(runny);
 				}
 				for (dnaRunnable runny : runnableList) {
@@ -50,9 +50,6 @@ public class MiniBlast {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-
 		}
-		System.exit(0);
 	}
-
 }

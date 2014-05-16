@@ -14,6 +14,7 @@ public class dnaRunnable<query> implements Runnable {
 	private ArrayList<Integer> indices2 = new ArrayList<Integer>();
 	private int total;
 	private dnaMonitor monitor;
+	private int queryLen;
 
 	/**
 	 * constructor
@@ -26,13 +27,16 @@ public class dnaRunnable<query> implements Runnable {
 	 *            --- the 'name' of the thread
 	 * @param monitor
 	 *            --- the shared monitor
+	 * @param queryLen
+	 *            --- the length of the query
 	 */
 	public dnaRunnable(String query, String dbString, int numericalOrder,
-			dnaMonitor monitor) {
+			dnaMonitor monitor, int queryLen) {
 		this.query = query;
 		this.dbString = dbString;
 		this.numericalOrder = numericalOrder;
 		this.monitor = monitor;
+		this.queryLen = queryLen;
 	}
 
 	// the overloaded run method
@@ -67,9 +71,9 @@ public class dnaRunnable<query> implements Runnable {
 					}
 					indices.add(index);
 					dbString = dbString.substring(0, index)
-							+ dbString.substring(index, index + 4)
+							+ dbString.substring(index, index + queryLen)
 									.toUpperCase()
-							+ dbString.substring(index + 4);
+							+ dbString.substring(index + queryLen);
 				} else {
 					index = dbString.indexOf(query, index + 1);
 					indices.add(index);
@@ -77,9 +81,9 @@ public class dnaRunnable<query> implements Runnable {
 						break;
 					}
 					dbString = dbString.substring(0, index)
-							+ dbString.substring(index, index + 4)
+							+ dbString.substring(index, index + queryLen)
 									.toUpperCase()
-							+ dbString.substring(index + 4);
+							+ dbString.substring(index + queryLen);
 				}
 			}
 			int index2 = 0;
@@ -91,9 +95,9 @@ public class dnaRunnable<query> implements Runnable {
 					}
 					indices2.add(index2);
 					dbString = dbString.substring(0, index2)
-							+ dbString.substring(index2, index2 + 4)
+							+ dbString.substring(index2, index2 + queryLen)
 									.toUpperCase()
-							+ dbString.substring(index2 + 4);
+							+ dbString.substring(index2 + queryLen);
 				} else {
 					index2 = dbString.indexOf(queryComplement, index + 1);
 					indices2.add(index);
@@ -101,9 +105,9 @@ public class dnaRunnable<query> implements Runnable {
 						break;
 					}
 					dbString = dbString.substring(0, index2)
-							+ dbString.substring(index2, index2 + 4)
+							+ dbString.substring(index2, index2 + queryLen)
 									.toUpperCase()
-							+ dbString.substring(index2 + 4);
+							+ dbString.substring(index2 + queryLen);
 				}
 			}
 			int loopOut = 0;
@@ -111,7 +115,6 @@ public class dnaRunnable<query> implements Runnable {
 				loopOut = monitor.print(numericalOrder, dbString);
 			}
 		}
-		//
 		else {
 			int loopOut = 0;
 			while (loopOut != -1) {
